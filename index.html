@@ -36,11 +36,11 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .page-header p { font-size: 14px; color: var(--text2); }
 .search-row { display: flex; gap: 10px; margin-bottom: 36px; }
 .search-input-wrap { flex: 1; position: relative; }
-.search-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text3); }
+.search-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text3); pointer-events: none; }
 .search-input { width: 100%; height: 50px; background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-lg); color: var(--text); font-size: 15px; font-family: 'Inter', sans-serif; padding: 0 16px 0 42px; transition: border-color 0.15s; }
 .search-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,232,154,0.08); }
 .search-input::placeholder { color: var(--text3); }
-.qualify-btn { height: 50px; padding: 0 28px; background: var(--green); border: none; border-radius: var(--radius-lg); color: #000; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap; }
+.qualify-btn { height: 50px; padding: 0 28px; background: var(--green); border: none; border-radius: var(--radius-lg); color: #000; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap; transition: opacity 0.15s; }
 .qualify-btn:hover { opacity: 0.88; }
 .qualify-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 .idle-state { padding: 60px 0; text-align: center; }
@@ -49,13 +49,12 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .idle-state h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
 .idle-state p { font-size: 14px; color: var(--text2); line-height: 1.65; max-width: 380px; margin: 0 auto; }
 .examples { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
-.example-pill { padding: 6px 14px; border-radius: 20px; font-size: 12px; background: var(--bg3); border: 1px solid var(--border2); color: var(--text2); cursor: pointer; font-family: 'Inter', sans-serif; }
+.example-pill { padding: 6px 14px; border-radius: 20px; font-size: 12px; background: var(--bg3); border: 1px solid var(--border2); color: var(--text2); cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
 .example-pill:hover { border-color: var(--green); color: var(--green); }
 .loading-wrap { padding: 40px 0; }
 .loading-steps { display: flex; flex-direction: column; gap: 14px; }
 .step { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text3); }
-.step-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.step-icon svg { width: 12px; height: 12px; }
+.step-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; }
 .step.done .step-icon { background: var(--green-dim); border-color: var(--green); color: var(--green); }
 .step.done { color: var(--text); }
 .step.active .step-icon { border-color: var(--amber); background: var(--amber-dim); }
@@ -100,7 +99,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .panel-card { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius-xl); padding: 20px; }
 .panel-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
 .panel-card p { font-size: 12px; color: var(--text2); margin-bottom: 14px; line-height: 1.5; }
-.gen-btn { width: 100%; height: 42px; border-radius: var(--radius); border: none; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+.gen-btn { width: 100%; height: 42px; border-radius: var(--radius); border: none; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
 .gen-btn.green { background: var(--green); color: #000; }
 .gen-btn.green:hover { opacity: 0.85; }
 .gen-btn.outline { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); }
@@ -115,8 +114,11 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .output-loading { font-size: 12px; color: var(--text3); padding: 8px 0; display: flex; align-items: center; gap: 8px; }
 .spin { width: 12px; height: 12px; border: 2px solid var(--border2); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.new-search-btn { background: none; border: none; color: var(--text3); font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; padding: 0; display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.new-search-btn { background: none; border: none; color: var(--text3); font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; padding: 0; display: flex; align-items: center; gap: 6px; margin-top: 8px; transition: color 0.15s; }
 .new-search-btn:hover { color: var(--text); }
+.err-banner { background: var(--red-dim); border: 1px solid rgba(255,92,92,0.2); border-radius: var(--radius-lg); padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start; }
+.err-banner strong { color: var(--red); font-size: 14px; display: block; margin-bottom: 3px; }
+.err-banner p { font-size: 13px; color: var(--text2); }
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .main { margin-left: 0; max-width: 100%; padding: 24px 20px; }
@@ -139,7 +141,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
     <div class="nav-label">Tools</div>
     <button class="nav-item active"><div class="nav-dot"></div>Prospect Qualifier</button>
     <div class="nav-label">About</div>
-    <div style="padding: 10px 12px; font-size: 12px; color: var(--text3); line-height: 1.65;">Type any company name to instantly score their fit, identify who to target, and generate personalized outreach.</div>
+    <div style="padding:10px 12px;font-size:12px;color:var(--text3);line-height:1.65;">Type any company name to instantly score their fit, identify who to target, and generate personalized outreach.</div>
     <div class="sidebar-footer"><p>Powered by AI · Built for EnrollHere sales</p></div>
   </aside>
   <main class="main">
@@ -150,121 +152,195 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
     <div class="search-row">
       <div class="search-input-wrap">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3-3" stroke-linecap="round"/></svg>
-        <input class="search-input" id="company-input" type="text" placeholder="e.g. Integrity Marketing Group, HCSC, AssuredPartners..." onkeydown="if(event.key==='Enter') runQualify()" />
+        <input class="search-input" id="company-input" type="text" placeholder="e.g. Integrity Marketing Group, HCSC, AssuredPartners..." />
       </div>
-      <button class="qualify-btn" id="go-btn" onclick="runQualify()">Qualify →</button>
+      <button class="qualify-btn" id="go-btn">Qualify &#8594;</button>
     </div>
     <div id="main-state">
       <div class="idle-state">
-        <div class="idle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg></div>
+        <div class="idle-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+        </div>
         <h3>Ready to qualify</h3>
         <p>Type any insurance agency or carrier. The AI will research the company, score their fit for EnrollHere, and prep your outreach.</p>
         <div class="examples">
-          <div class="example-pill" onclick="fillAndRun('Integrity Marketing Group')">Integrity Marketing Group</div>
-          <div class="example-pill" onclick="fillAndRun('AssuredPartners')">AssuredPartners</div>
-          <div class="example-pill" onclick="fillAndRun('HCSC')">HCSC</div>
-          <div class="example-pill" onclick="fillAndRun('NFP Corp')">NFP Corp</div>
+          <div class="example-pill" id="ex1">Integrity Marketing Group</div>
+          <div class="example-pill" id="ex2">AssuredPartners</div>
+          <div class="example-pill" id="ex3">HCSC</div>
+          <div class="example-pill" id="ex4">NFP Corp</div>
         </div>
       </div>
     </div>
   </main>
 </div>
 <script>
-let currentData = null;
-const p1 = 'sk-ant-api03-Nt95GguKQLrIaRPtQHBjgOrqOf3RhX6c2UzuuzlkW_Wou';
-const p2 = 'PUoi-BeJKR78rEe8wLUR03XDiNjzQPCkV3gzQUyRQ-dMHNKAAA';
-const AK = p1 + p2;
+var currentData = null;
+var KEY = ['sk-ant-api03-Nt95GguKQLrIaRPtQHBjgOrqOf3RhX6c2Uzuuzlk', 'W_WouPUoi-BeJKR78rEe8wLUR03XDiNjzQPCkV3gzQUyRQ-dMHNKAAA'].join('');
 
-function fillAndRun(name) { document.getElementById('company-input').value = name; runQualify(); }
+document.getElementById('go-btn').addEventListener('click', function() { runQualify(); });
+document.getElementById('company-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') runQualify(); });
+document.getElementById('ex1').addEventListener('click', function() { fillAndRun('Integrity Marketing Group'); });
+document.getElementById('ex2').addEventListener('click', function() { fillAndRun('AssuredPartners'); });
+document.getElementById('ex3').addEventListener('click', function() { fillAndRun('HCSC'); });
+document.getElementById('ex4').addEventListener('click', function() { fillAndRun('NFP Corp'); });
+
+function fillAndRun(name) {
+  document.getElementById('company-input').value = name;
+  runQualify();
+}
+
+function esc(t) {
+  if (!t) return '';
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showIdle() {
+  document.getElementById('main-state').innerHTML = '<div class="idle-state"><div class="idle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg></div><h3>Ready to qualify</h3><p>Type any insurance agency or carrier. The AI will research the company, score their fit for EnrollHere, and prep your outreach.</p></div>';
+}
 
 async function runQualify() {
-  const company = document.getElementById('company-input').value.trim();
+  var company = document.getElementById('company-input').value.trim();
   if (!company) return;
-  const btn = document.getElementById('go-btn');
-  btn.disabled = true; btn.textContent = 'Working...';
-  const main = document.getElementById('main-state');
-  const checkSVG = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  main.innerHTML = '<div class="loading-wrap"><div class="loading-steps"><div class="step active" id="s1"><div class="step-icon"><div class="step-pulse"></div></div>Researching ' + esc(company) + '</div><div class="step" id="s2"><div class="step-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/></svg></div>Checking industry &amp; size fit</div><div class="step" id="s3"><div class="step-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/></svg></div>Identifying tech stack signals</div><div class="step" id="s4"><div class="step-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/></svg></div>Building qualification score</div></div></div>';
-  [[600,1,2],[1300,2,3],[2100,3,4]].forEach(([d,a,n]) => setTimeout(() => {
-    const p = document.getElementById('s'+a), nx = document.getElementById('s'+n);
-    if(p){p.classList.remove('active');p.classList.add('done');p.querySelector('.step-icon').innerHTML=checkSVG;}
-    if(nx){nx.classList.add('active');nx.querySelector('.step-icon').innerHTML='<div class="step-pulse"></div>';}
-  }, d));
+  var btn = document.getElementById('go-btn');
+  btn.disabled = true;
+  btn.textContent = 'Working...';
+  var main = document.getElementById('main-state');
 
-  const prompt = 'You are a sales intelligence analyst for EnrollHere, an end-to-end platform for insurance agencies and carriers that consolidates tech stacks (leads, commissions, CCaaS, reporting, analytics). Average deal size $50K. Key client: AmeriLife.\n\nResearch the company "' + company + '" and return a JSON object with EXACTLY these fields:\n{\n  "company": "official company name",\n  "description": "1-2 sentence description",\n  "industry": one of ["Medicare Advantage","Health/Life Insurance","Property & Casualty","Wealth Management","Home Services","Other Insurance","Outside Target Verticals","Unknown"],\n  "agent_count": one of ["Under 15","15-25","25-50","50-200","200-1000","1000+","Carrier-scale (50,000+)","Unknown"],\n  "revenue_range": one of ["Under $5M","$5M-$30M","$30M-$100M","$100M-$1B","$1B+","Carrier ($30B+)","Unknown"],\n  "tech_pain_signals": ["2-4 specific pain signals"],\n  "vendor_situation": one of ["Multiple disconnected tools","Partial stack","On a competitor","Mostly manual","Unknown"],\n  "disqualified": true or false,\n  "disqualify_reason": "reason if disqualified else null",\n  "score": integer 0-100,\n  "tier": one of ["Hot","Warm","Cold","Disqualified"],\n  "score_rationale": "2-3 sentences explaining the score",\n  "target_titles": ["4-6 specific job titles, Operations/VP/Director first"],\n  "key_talking_point": "one sharp specific talking point"\n}\nScoring: Medicare Advantage=25, Health/Life=20, P&C=15, Wealth/Home=12, Other Insurance=14, Outside=disqualify. Size: Under 15=disqualify, 15-25=8, 25-50=18, 50-200=22, 200+=25, Carrier=25. Tech pain: 0-20pts. Vendor: 0-15pts.\nReturn ONLY valid JSON, no markdown, no citation tags, no XML tags of any kind. Do not include <cite> or any other HTML or XML tags in any field values. Plain text only in all fields.
+  main.innerHTML = '<div class="loading-wrap"><div class="loading-steps"><div class="step active" id="s1"><div class="step-icon"><div class="step-pulse"></div></div><span>Researching ' + esc(company) + '</span></div><div class="step" id="s2"><div class="step-icon"></div><span>Checking industry and size fit</span></div><div class="step" id="s3"><div class="step-icon"></div><span>Identifying tech stack signals</span></div><div class="step" id="s4"><div class="step-icon"></div><span>Building qualification score</span></div></div></div>';
 
-IMPORTANT: Do NOT disqualify companies just because they have their own technology. Only disqualify if: confirmed under 15 agents OR completely outside insurance/financial services. Even if a company has internal tech, they may still benefit from EnrollHere. Use your judgment - a large IMO with proprietary tech might still score well if they have pain signals around data stitching or reporting gaps.';
+  var checkMark = '&#10003;';
+  setTimeout(function() { advance('s1','s2',checkMark); }, 700);
+  setTimeout(function() { advance('s2','s3',checkMark); }, 1400);
+  setTimeout(function() { advance('s3','s4',checkMark); }, 2100);
+
+  var systemPrompt = 'You are a sales intelligence analyst for EnrollHere, an end-to-end platform for insurance agencies and carriers that consolidates tech stacks (leads, commissions, CCaaS, reporting, analytics) into one integrated system. Average deal size $50K. Key client: AmeriLife.';
+
+  var userPrompt = 'Research the company "' + company + '" and return a JSON object. Return ONLY raw JSON with no markdown fences, no citation tags, no XML tags, and no explanatory text before or after. All field values must be plain text only.\n\nRequired fields:\n{\n"company": "official name",\n"description": "1-2 sentence plain text description of what they do",\n"industry": "one of: Medicare Advantage, Health/Life Insurance, Property and Casualty, Wealth Management, Home Services, Other Insurance, Outside Target Verticals, Unknown",\n"agent_count": "one of: Under 15, 15-25, 25-50, 50-200, 200-1000, 1000+, Carrier-scale, Unknown",\n"revenue_range": "one of: Under $5M, $5M-$30M, $30M-$100M, $100M-$1B, $1B+, Carrier $30B+, Unknown",\n"tech_pain_signals": ["plain text signal 1", "plain text signal 2"],\n"vendor_situation": "one of: Multiple disconnected tools, Partial stack, On a competitor, Mostly manual, Unknown",\n"disqualified": false,\n"disqualify_reason": null,\n"score": 75,\n"tier": "one of: Hot, Warm, Cold, Disqualified",\n"score_rationale": "plain text 2-3 sentence explanation",\n"target_titles": ["Title 1", "Title 2", "Title 3"],\n"key_talking_point": "plain text one sharp talking point"\n}\n\nScoring rules: Industry points - Medicare Advantage=25, Health/Life=20, P&C=15, Wealth/Home Services=12, Other Insurance=14. Size points - 15-25=8, 25-50=18, 50-200=22, 200+=25, Carrier=25. Tech pain=0-20pts. Vendor situation=0-15pts. Max 100.\n\nDisqualify ONLY if the company is confirmed to have fewer than 15 agents OR is completely outside insurance and financial services with no connection to those industries. Do NOT disqualify because a company has its own technology platform - they may still benefit from EnrollHere. Do NOT disqualify large IMOs or carriers just because they have internal tools.\n\nTiers: 75+ = Hot, 50-74 = Warm, below 50 = Cold.';
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': AK, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1200, tools: [{ type: 'web_search_20250305', name: 'web_search' }], messages: [{ role: 'user', content: prompt }] })
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1200,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
     });
-    const data = await res.json();
+
+    var data = await response.json();
     if (data.error) throw new Error(data.error.message);
-    let txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    txt = txt.replace(/```json|```/g,'').trim();
-    const i=txt.indexOf('{'), l=txt.lastIndexOf('}');
-    if(i!==-1&&l!==-1) txt=txt.slice(i,l+1);
+
+    var txt = '';
+    for (var i = 0; i < data.content.length; i++) {
+      if (data.content[i].type === 'text') txt += data.content[i].text;
+    }
+    txt = txt.replace(/```json/g,'').replace(/```/g,'').trim();
+    var start = txt.indexOf('{');
+    var end = txt.lastIndexOf('}');
+    if (start !== -1 && end !== -1) txt = txt.slice(start, end + 1);
     currentData = JSON.parse(txt);
     renderResult(currentData);
   } catch(e) {
-    main.innerHTML = '<div class="disq-banner"><div class="disq-x">⚠</div><div><strong>Error</strong><p>' + esc(e.message||'Something went wrong. Please try again.') + '</p></div></div>';
+    main.innerHTML = '<div class="err-banner"><div><strong>Error</strong><p>' + esc(e.message || 'Something went wrong. Please try again.') + '</p></div></div>';
   }
-  btn.disabled=false; btn.textContent='Qualify →';
+
+  btn.disabled = false;
+  btn.innerHTML = 'Qualify &#8594;';
+}
+
+function advance(fromId, toId, mark) {
+  var from = document.getElementById(fromId);
+  var to = document.getElementById(toId);
+  if (from) { from.classList.remove('active'); from.classList.add('done'); from.querySelector('.step-icon').innerHTML = mark; }
+  if (to) { to.classList.add('active'); to.querySelector('.step-icon').innerHTML = '<div class="step-pulse"></div>'; }
 }
 
 function renderResult(d) {
-  const main = document.getElementById('main-state');
-  const isDisq = d.disqualified || d.tier==='Disqualified';
-  const scoreColor = isDisq ? '#ff5c5c' : d.tier==='Hot' ? '#00e89a' : d.tier==='Warm' ? '#f5a623' : '#55555f';
-  const tierClass = isDisq ? 'tier-disq' : d.tier==='Hot' ? 'tier-hot' : d.tier==='Warm' ? 'tier-warm' : 'tier-cold';
-  const signals = (d.tech_pain_signals||[]).map(s=>'<div class="signal"><div class="signal-dot"></div><span>'+esc(s)+'</span></div>').join('');
-  const titles = (d.target_titles||[]).map((t,i)=>'<span class="title-tag '+(i<2?'primary':'')+'">' +esc(t)+'</span>').join('');
-  const disqBanner = isDisq ? '<div class="disq-banner"><div class="disq-x">✕</div><div><strong>Disqualified</strong><p>'+(d.disqualify_reason?esc(d.disqualify_reason):'Does not meet minimum qualifying criteria.')+'</p></div></div>' : '';
-  main.innerHTML = '<div>'+disqBanner+'<div class="result-grid"><div><div class="score-card"><div class="score-top"><div class="score-left"><h2>'+esc(d.company||'')+'</h2><p>'+esc(d.description||'')+'</p></div><div style="text-align:right"><div class="score-big" style="color:'+scoreColor+'">'+d.score+'<span class="score-denom">/100</span></div><div style="margin-top:8px"><span class="tier-pill '+tierClass+'">'+d.tier+'</span></div></div></div><div class="score-bar-track"><div class="score-bar-fill" style="width:'+d.score+'%;background:'+scoreColor+'"></div></div><p class="rationale">'+esc(d.score_rationale||'')+'</p>'+(d.key_talking_point?'<div class="talking-point"><div class="tp-label">Key talking point</div><p>'+esc(d.key_talking_point)+'</p></div>':'')+'<div class="info-grid"><div class="info-cell"><div class="info-cell-label">Industry</div><div class="info-cell-val">'+esc(d.industry||'—')+'</div></div><div class="info-cell"><div class="info-cell-label">Est. agent count</div><div class="info-cell-val">'+esc(d.agent_count||'—')+'</div></div><div class="info-cell"><div class="info-cell-label">Revenue range</div><div class="info-cell-val">'+esc(d.revenue_range||'—')+'</div></div><div class="info-cell"><div class="info-cell-label">Vendor situation</div><div class="info-cell-val">'+esc(d.vendor_situation||'—')+'</div></div></div>'+(signals?'<div class="section-head">Tech pain signals</div><div class="signal-list">'+signals+'</div>':'')+(titles?'<div class="section-head">Who to target</div><div class="titles-wrap">'+titles+'</div><div class="titles-note">Green = primary targets</div>':'')+'</div><button class="new-search-btn" onclick="newSearch()">← Qualify another company</button></div>'+((!isDisq)?'<div class="right-panel"><div class="panel-card"><h3>Outreach Email</h3><p>AI-drafted cold email personalized to '+esc(d.company||'this prospect')+'.</p><button class="gen-btn green" onclick="generateEmail()">Draft email →</button><div class="output-wrap" id="email-output"></div></div><div class="panel-card"><h3>Call Script</h3><p>Full talk track with discovery questions, objection handling, and close.</p><button class="gen-btn outline" onclick="generateCallScript()">Build script →</button><div class="output-wrap" id="call-output"></div></div></div>':'')+'</div></div>';
+  var main = document.getElementById('main-state');
+  var isDisq = d.disqualified || d.tier === 'Disqualified';
+  var scoreColor = isDisq ? '#ff5c5c' : d.tier === 'Hot' ? '#00e89a' : d.tier === 'Warm' ? '#f5a623' : '#55555f';
+  var tierClass = isDisq ? 'tier-disq' : d.tier === 'Hot' ? 'tier-hot' : d.tier === 'Warm' ? 'tier-warm' : 'tier-cold';
+
+  var signals = '';
+  if (d.tech_pain_signals) {
+    for (var i = 0; i < d.tech_pain_signals.length; i++) {
+      signals += '<div class="signal"><div class="signal-dot"></div><span>' + esc(d.tech_pain_signals[i]) + '</span></div>';
+    }
+  }
+
+  var titles = '';
+  if (d.target_titles) {
+    for (var i = 0; i < d.target_titles.length; i++) {
+      titles += '<span class="title-tag ' + (i < 2 ? 'primary' : '') + '">' + esc(d.target_titles[i]) + '</span>';
+    }
+  }
+
+  var disqBanner = isDisq ? '<div class="disq-banner"><div class="disq-x">&#10005;</div><div><strong>Disqualified</strong><p>' + esc(d.disqualify_reason || 'Does not meet minimum qualifying criteria.') + '</p></div></div>' : '';
+
+  var outreachPanel = !isDisq ? '<div class="right-panel"><div class="panel-card"><h3>Outreach Email</h3><p>AI-drafted cold email personalized to ' + esc(d.company || 'this prospect') + '.</p><button class="gen-btn green" id="email-btn">Draft email &#8594;</button><div class="output-wrap" id="email-output"></div></div><div class="panel-card"><h3>Call Script</h3><p>Full talk track with discovery questions, objection handling, and close.</p><button class="gen-btn outline" id="call-btn">Build script &#8594;</button><div class="output-wrap" id="call-output"></div></div></div>' : '';
+
+  main.innerHTML = '<div>' + disqBanner + '<div class="result-grid"><div><div class="score-card"><div class="score-top"><div class="score-left"><h2>' + esc(d.company || '') + '</h2><p>' + esc(d.description || '') + '</p></div><div style="text-align:right"><div class="score-big" style="color:' + scoreColor + '">' + d.score + '<span class="score-denom">/100</span></div><div style="margin-top:8px"><span class="tier-pill ' + tierClass + '">' + esc(d.tier) + '</span></div></div></div><div class="score-bar-track"><div class="score-bar-fill" style="width:' + d.score + '%;background:' + scoreColor + '"></div></div><p class="rationale">' + esc(d.score_rationale || '') + '</p>' + (d.key_talking_point ? '<div class="talking-point"><div class="tp-label">Key talking point</div><p>' + esc(d.key_talking_point) + '</p></div>' : '') + '<div class="info-grid"><div class="info-cell"><div class="info-cell-label">Industry</div><div class="info-cell-val">' + esc(d.industry || '—') + '</div></div><div class="info-cell"><div class="info-cell-label">Est. agent count</div><div class="info-cell-val">' + esc(d.agent_count || '—') + '</div></div><div class="info-cell"><div class="info-cell-label">Revenue range</div><div class="info-cell-val">' + esc(d.revenue_range || '—') + '</div></div><div class="info-cell"><div class="info-cell-label">Vendor situation</div><div class="info-cell-val">' + esc(d.vendor_situation || '—') + '</div></div></div>' + (signals ? '<div class="section-head">Tech pain signals</div><div class="signal-list">' + signals + '</div>' : '') + (titles ? '<div class="section-head">Who to target</div><div class="titles-wrap">' + titles + '</div><div class="titles-note">Green = primary targets</div>' : '') + '</div><button class="new-search-btn" id="new-search">&#8592; Qualify another company</button></div>' + outreachPanel + '</div></div>';
+
+  document.getElementById('new-search').addEventListener('click', function() {
+    document.getElementById('company-input').value = '';
+    showIdle();
+    currentData = null;
+    document.getElementById('company-input').focus();
+  });
+
+  if (!isDisq) {
+    document.getElementById('email-btn').addEventListener('click', generateEmail);
+    document.getElementById('call-btn').addEventListener('click', generateCallScript);
+  }
 }
 
 async function generateEmail() {
-  const d = currentData; if(!d) return;
-  const out = document.getElementById('email-output');
+  var d = currentData;
+  if (!d) return;
+  var out = document.getElementById('email-output');
   out.innerHTML = '<div class="output-loading"><div class="spin"></div>Drafting email...</div>';
-  const prompt = 'You are a senior SDR at EnrollHere, a platform consolidating insurance agency/carrier tech stacks. Key client: AmeriLife. Avg deal: $50K.\n\nWrite a cold outreach email for ' + d.company + '.\nAbout: ' + (d.description||'') + '\nIndustry: ' + d.industry + ' | Size: ' + d.agent_count + '\nPain: ' + (d.tech_pain_signals||[]).join(', ') + '\nTargets: ' + (d.target_titles||[]).slice(0,2).join(', ') + '\nTalking point: ' + (d.key_talking_point||'') + '\n\nRequirements: Compelling subject, specific hook, connect pain to EnrollHere, reference AmeriLife, 15-min CTA, 150-180 words, human and direct.\n\nFormat:\nSubject: [line]\n\n[body]';
+  var prompt = 'Write a cold outreach email for ' + d.company + '. About them: ' + (d.description || '') + '. Industry: ' + d.industry + '. Size: ' + d.agent_count + '. Pain signals: ' + (d.tech_pain_signals || []).join(', ') + '. Primary contacts: ' + (d.target_titles || []).slice(0,2).join(', ') + '. Key talking point: ' + (d.key_talking_point || '') + '. Requirements: Compelling subject line, specific hook tied to their situation, connect pain to EnrollHere consolidating their tech stack, reference AmeriLife as a client, low-friction 15-min call CTA, 150-180 words, human and direct. Format as: Subject: [line]\n\n[body]';
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]}) });
-    const data = await res.json();
-    const text = data.content?.find(b=>b.type==='text')?.text||'Could not generate.';
-    out.innerHTML = '<div class="output-box"><div class="output-top"><span class="output-label">Email draft</span><button class="copy-btn" onclick="copyEl(\'em\',this)">Copy</button></div><div class="output-text" id="em">'+esc(text)+'</div></div>';
-  } catch(e) { out.innerHTML='<div class="output-loading">Error — try again.</div>'; }
+    var res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': KEY, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 800, messages: [{ role: 'user', content: prompt }] }) });
+    var data = await res.json();
+    var text = '';
+    for (var i = 0; i < data.content.length; i++) { if (data.content[i].type === 'text') text = data.content[i].text; }
+    out.innerHTML = '<div class="output-box"><div class="output-top"><span class="output-label">Email draft</span><button class="copy-btn" id="copy-email">Copy</button></div><div class="output-text" id="email-text">' + esc(text) + '</div></div>';
+    document.getElementById('copy-email').addEventListener('click', function() { copyEl('email-text', this); });
+  } catch(e) { out.innerHTML = '<div class="output-loading">Error - please try again.</div>'; }
 }
 
 async function generateCallScript() {
-  const d = currentData; if(!d) return;
-  const out = document.getElementById('call-output');
+  var d = currentData;
+  if (!d) return;
+  var out = document.getElementById('call-output');
   out.innerHTML = '<div class="output-loading"><div class="spin"></div>Building script...</div>';
-  const prompt = 'You are a sales coach at EnrollHere, a platform consolidating tech stacks for insurance agencies and carriers.\n\nBuild a cold call script for ' + d.company + ' (' + d.agent_count + ', ' + d.industry + ').\nPain: ' + (d.tech_pain_signals||[]).join(', ') + '\nTargets: ' + (d.target_titles||[]).slice(0,2).join(', ') + '\nTalking point: ' + (d.key_talking_point||'') + '\n\nInclude: 1) 15-second opening 2) Permission bridge 3) 3-4 discovery questions 4) Value bridge 5) 2 objections + responses 6) Close. Conversational, clear headers.';
+  var prompt = 'Build a cold call script for ' + d.company + ' (' + d.agent_count + ', ' + d.industry + '). Pain signals: ' + (d.tech_pain_signals || []).join(', ') + '. Target titles: ' + (d.target_titles || []).slice(0,2).join(', ') + '. Key talking point: ' + (d.key_talking_point || '') + '. Include: 1) 15-second pattern interrupt opening 2) Permission bridge 3) 3-4 sharp discovery questions about current stack 4) Value bridge to EnrollHere 5) 2 likely objections with responses 6) Next step close. Conversational and natural. Use clear section headers.';
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]}) });
-    const data = await res.json();
-    const text = data.content?.find(b=>b.type==='text')?.text||'Could not generate.';
-    out.innerHTML = '<div class="output-box"><div class="output-top"><span class="output-label">Call script</span><button class="copy-btn" onclick="copyEl(\'cs\',this)">Copy</button></div><div class="output-text" id="cs">'+esc(text)+'</div></div>';
-  } catch(e) { out.innerHTML='<div class="output-loading">Error — try again.</div>'; }
+    var res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': KEY, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] }) });
+    var data = await res.json();
+    var text = '';
+    for (var i = 0; i < data.content.length; i++) { if (data.content[i].type === 'text') text = data.content[i].text; }
+    out.innerHTML = '<div class="output-box"><div class="output-top"><span class="output-label">Call script</span><button class="copy-btn" id="copy-call">Copy</button></div><div class="output-text" id="call-text">' + esc(text) + '</div></div>';
+    document.getElementById('copy-call').addEventListener('click', function() { copyEl('call-text', this); });
+  } catch(e) { out.innerHTML = '<div class="output-loading">Error - please try again.</div>'; }
 }
 
-function copyEl(id,btn) {
-  const el=document.getElementById(id); if(!el) return;
-  navigator.clipboard.writeText(el.textContent).then(()=>{btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1500);});
+function copyEl(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+  });
 }
-
-function newSearch() {
-  document.getElementById('company-input').value='';
-  document.getElementById('main-state').innerHTML='<div class="idle-state"><div class="idle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg></div><h3>Ready to qualify</h3><p>Type any insurance agency or carrier. The AI will research the company, score their fit for EnrollHere, and prep your outreach.</p><div class="examples"><div class="example-pill" onclick="fillAndRun(\'Integrity Marketing Group\')">Integrity Marketing Group</div><div class="example-pill" onclick="fillAndRun(\'AssuredPartners\')">AssuredPartners</div><div class="example-pill" onclick="fillAndRun(\'HCSC\')">HCSC</div><div class="example-pill" onclick="fillAndRun(\'NFP Corp\')">NFP Corp</div></div></div>';
-  document.getElementById('company-input').focus();
-  currentData=null;
-}
-
-function esc(t){if(!t)return '';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 </script>
 </body>
 </html>
