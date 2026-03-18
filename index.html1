@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EnrollHere — Prospect Qualifier</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0b;
+  --bg2: #111113;
+  --bg3: #18181c;
+  --bg4: #1f1f25;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --green: #00e89a;
+  --green-dim: rgba(0,232,154,0.12);
+  --green-dim2: rgba(0,232,154,0.06);
+  --text: #f0f0f2;
+  --text2: #8a8a96;
+  --text3: #55555f;
+  --amber: #f5a623;
+  --amber-dim: rgba(245,166,35,0.12);
+  --red: #ff5c5c;
+  --red-dim: rgba(255,92,92,0.1);
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* Layout */
+.shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 260px; flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 28px 20px;
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0;
+}
+
+.main { margin-left: 260px; flex: 1; padding: 40px 48px; max-width: calc(100% - 260px); }
+
+/* Sidebar */
+.brand { display: flex; align-items: center; gap: 11px; margin-bottom: 36px; }
+.brand-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: var(--green); display: flex; align-items: center; justify-content: center;
+}
+.brand-icon svg { width: 18px; height: 18px; }
+.brand-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+.brand-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+.nav-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; margin-top: 24px; }
+.nav-label:first-of-type { margin-top: 0; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 500; color: var(--text2);
+  cursor: pointer; transition: all 0.15s; margin-bottom: 2px;
+  border: none; background: none; width: 100%; text-align: left; font-family: 'Inter', sans-serif;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active { background: var(--green-dim); color: var(--green); }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+.sidebar-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border); }
+.sidebar-footer p { font-size: 11px; color: var(--text3); line-height: 1.6; }
+
+/* Main header */
+.page-header { margin-bottom: 36px; }
+.page-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin-bottom: 6px; }
+.page-header p { font-size: 14px; color: var(--text2); }
+
+/* Search bar */
+.search-row { display: flex; gap: 10px; margin-bottom: 36px; }
+.search-input-wrap { flex: 1; position: relative; }
+.search-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text3); }
+.search-input {
+  width: 100%; height: 50px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--radius-lg); color: var(--text);
+  font-size: 15px; font-family: 'Inter', sans-serif;
+  padding: 0 16px 0 42px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.search-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,232,154,0.08); }
+.search-input::placeholder { color: var(--text3); }
+
+.qualify-btn {
+  height: 50px; padding: 0 28px;
+  background: var(--green); border: none; border-radius: var(--radius-lg);
+  color: #000; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap; letter-spacing: -0.01em;
+}
+.qualify-btn:hover { opacity: 0.88; }
+.qualify-btn:active { transform: scale(0.98); }
+.qualify-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* Idle state */
+.idle-state { padding: 60px 0; text-align: center; }
+.idle-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--bg3); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+.idle-icon svg { width: 24px; height: 24px; color: var(--text3); }
+.idle-state h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.idle-state p { font-size: 14px; color: var(--text2); line-height: 1.65; max-width: 380px; margin: 0 auto; }
+.examples { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
+.example-pill {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px;
+  background: var(--bg3); border: 1px solid var(--border2); color: var(--text2);
+  cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif;
+}
+.example-pill:hover { border-color: var(--green); color: var(--green); }
+
+/* Loading */
+.loading-wrap { padding: 40px 0; }
+.loading-steps { display: flex; flex-direction: column; gap: 14px; }
+.step { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text3); }
+.step-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; }
+.step-icon svg { width: 12px; height: 12px; }
+.step.done .step-icon { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+.step.done { color: var(--text); }
+.step.active .step-icon { border-color: var(--amber); background: var(--amber-dim); }
+.step.active { color: var(--text2); }
+.step-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); animation: pulse 0.9s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
+
+/* Result layout */
+.result-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start; }
+
+/* Score card */
+.score-card {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-xl); padding: 28px; margin-bottom: 20px;
+}
+.score-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+.score-left h2 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
+.score-left p { font-size: 13px; color: var(--text2); }
+.score-big { font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+.score-denom { font-size: 18px; color: var(--text3); font-weight: 500; }
+
+.tier-pill { padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.tier-hot { background: var(--green-dim); color: var(--green); border: 1px solid rgba(0,232,154,0.2); }
+.tier-warm { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.2); }
+.tier-cold { background: var(--bg4); color: var(--text2); border: 1px solid var(--border2); }
+.tier-disq { background: var(--red-dim); color: var(--red); border: 1px solid rgba(255,92,92,0.2); }
+
+.score-bar-track { height: 4px; background: var(--bg4); border-radius: 2px; margin: 20px 0; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 2px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+.rationale { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
+
+.talking-point {
+  background: var(--green-dim2); border: 1px solid rgba(0,232,154,0.15);
+  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px;
+}
+.talking-point .tp-label { font-size: 10px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.talking-point p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+/* Info grid */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.info-cell { background: var(--bg3); border-radius: var(--radius); padding: 12px 14px; border: 1px solid var(--border); }
+.info-cell-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+.info-cell-val { font-size: 13px; color: var(--text); font-weight: 500; }
+
+/* Signals */
+.section-head { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+.signal-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+.signal { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text2); line-height: 1.5; }
+.signal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px; }
+
+/* Titles */
+.titles-wrap { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 6px; }
+.title-tag { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; background: var(--bg4); border: 1px solid var(--border2); color: var(--text2); }
+.title-tag.primary { background: var(--green-dim); border-color: rgba(0,232,154,0.2); color: var(--green); }
+.titles-note { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+/* Disq banner */
+.disq-banner {
+  background: var(--red-dim); border: 1px solid rgba(255,92,92,0.2);
+  border-radius: var(--radius-lg); padding: 16px 20px;
+  display: flex; gap: 12px; align-items: flex-start; margin-bottom: 20px;
+}
+.disq-x { font-size: 18px; color: var(--red); flex-shrink: 0; line-height: 1.2; }
+.disq-banner strong { color: var(--red); font-size: 14px; display: block; margin-bottom: 3px; }
+.disq-banner p { font-size: 13px; color: var(--text2); }
+
+/* Right panel */
+.right-panel { display: flex; flex-direction: column; gap: 14px; }
+
+.panel-card {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-xl); padding: 20px;
+}
+.panel-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.panel-card p { font-size: 12px; color: var(--text2); margin-bottom: 14px; line-height: 1.5; }
+
+.gen-btn {
+  width: 100%; height: 42px;
+  border-radius: var(--radius); border: none;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: 'Inter', sans-serif; transition: all 0.15s;
+  letter-spacing: -0.01em;
+}
+.gen-btn.green { background: var(--green); color: #000; }
+.gen-btn.green:hover { opacity: 0.85; }
+.gen-btn.outline { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); }
+.gen-btn.outline:hover { border-color: var(--green); color: var(--green); }
+
+/* Output */
+.output-wrap { margin-top: 14px; }
+.output-box { background: var(--bg3); border-radius: var(--radius); border: 1px solid var(--border); padding: 14px; }
+.output-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.output-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; }
+.copy-btn { font-size: 11px; padding: 4px 10px; background: var(--bg4); border: 1px solid var(--border2); border-radius: 5px; color: var(--text2); cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
+.copy-btn:hover { color: var(--green); border-color: rgba(0,232,154,0.3); }
+.output-text { font-size: 12px; color: var(--text2); line-height: 1.75; white-space: pre-wrap; max-height: 340px; overflow-y: auto; }
+.output-loading { font-size: 12px; color: var(--text3); padding: 8px 0; display: flex; align-items: center; gap: 8px; }
+.spin { width: 12px; height: 12px; border: 2px solid var(--border2); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* New search */
+.new-search-btn {
+  background: none; border: none; color: var(--text3); font-size: 13px;
+  cursor: pointer; font-family: 'Inter', sans-serif; padding: 0;
+  display: flex; align-items: center; gap: 6px; margin-top: 8px;
+  transition: color 0.15s;
+}
+.new-search-btn:hover { color: var(--text); }
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; max-width: 100%; padding: 24px 20px; }
+  .result-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.5C16.5 22.15 20 17.25 20 12V6l-8-4z" fill="#000" opacity="0.85"/><path d="M9 12l2 2 4-4" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">EnrollHere</div>
+        <div class="brand-sub">Sales Intelligence</div>
+      </div>
+    </div>
+
+    <div class="nav-label">Tools</div>
+    <button class="nav-item active">
+      <div class="nav-dot"></div>Prospect Qualifier
+    </button>
+
+    <div class="nav-label">About</div>
+    <div style="padding: 10px 12px; font-size: 12px; color: var(--text3); line-height: 1.65;">
+      Type any company name to instantly score their fit, identify who to target, and generate personalized outreach.
+    </div>
+
+    <div class="sidebar-footer">
+      <p>Powered by AI · Built for EnrollHere sales</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Prospect Qualifier</h1>
+      <p>Enter a company name — AI does the research, scoring, and outreach prep</p>
+    </div>
+
+    <div class="search-row">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3-3" stroke-linecap="round"/></svg>
+        <input class="search-input" id="company-input" type="text" placeholder="e.g. Integrity Marketing Group, HCSC, AssuredPartners..." onkeydown="if(event.key==='Enter') runQualify()" />
+      </div>
+      <button class="qualify-btn" id="go-btn" onclick="runQualify()">Qualify →</button>
+    </div>
+
+    <div id="main-state">
+      <div class="idle-state">
+        <div class="idle-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Ready to qualify</h3>
+        <p>Type any insurance agency or carrier. The AI will research the company, score their fit for EnrollHere, and prep your outreach.</p>
+        <div class="examples">
+          <div class="example-pill" onclick="fillAndRun('Integrity Marketing Group')">Integrity Marketing Group</div>
+          <div class="example-pill" onclick="fillAndRun('AssuredPartners')">AssuredPartners</div>
+          <div class="example-pill" onclick="fillAndRun('HCSC')">HCSC</div>
+          <div class="example-pill" onclick="fillAndRun('NFP Corp')">NFP Corp</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+let currentData = null;
+
+function fillAndRun(name) {
+  document.getElementById('company-input').value = name;
+  runQualify();
+}
+
+async function runQualify() {
+  const company = document.getElementById('company-input').value.trim();
+  if (!company) return;
+  const btn = document.getElementById('go-btn');
+  btn.disabled = true; btn.textContent = 'Working...';
+  const main = document.getElementById('main-state');
+
+  main.innerHTML = `<div class="loading-wrap"><div class="loading-steps">
+    <div class="step active" id="s1"><div class="step-icon"><div class="step-pulse"></div></div>Researching <strong style="color:var(--text)">${esc(company)}</strong></div>
+    <div class="step" id="s2"><div class="step-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/></svg></div>Checking industry &amp; size fit</div>
+    <div class="step" id="s3"><div class="step-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/></svg></div>Identifying tech stack signals</div>
+    <div class="step" id="s4"><div class="step-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/></svg></div>Building qualification score &amp; outreach intel</div>
+  </div></div>`;
+
+  const checkSVG = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,6 5,9 10,3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  [[600,1,2],[1300,2,3],[2100,3,4]].forEach(([d,a,n]) => setTimeout(() => {
+    const p = document.getElementById('s'+a), nx = document.getElementById('s'+n);
+    if(p){p.classList.remove('active');p.classList.add('done');p.querySelector('.step-icon').innerHTML=checkSVG;}
+    if(nx){nx.classList.add('active');nx.querySelector('.step-icon').innerHTML='<div class="step-pulse"></div>';}
+  }, d));
+
+  const prompt = `You are a sales intelligence analyst for EnrollHere — an end-to-end platform for insurance agencies and carriers that consolidates tech stacks (leads, commissions, CCaaS, reporting, analytics) into one integrated system. Average deal size $50K. Key reference client: AmeriLife.
+
+Research the company "${company}" and return a JSON object with EXACTLY these fields:
+{
+  "company": "official company name",
+  "description": "1-2 sentence description of what they do",
+  "industry": one of ["Medicare Advantage","Health/Life Insurance","Property & Casualty","Wealth Management","Home Services","Other Insurance","Outside Target Verticals","Unknown"],
+  "agent_count": one of ["Under 15","15-25","25-50","50-200","200-1000","1000+","Carrier-scale (50,000+)","Unknown"],
+  "revenue_range": one of ["Under $5M","$5M-$30M","$30M-$100M","$100M-$1B","$1B+","Carrier ($30B+)","Unknown"],
+  "tech_pain_signals": ["2-4 specific pain signals based on what you know about this company or very similar companies"],
+  "vendor_situation": one of ["Multiple disconnected tools","Partial stack","On a competitor","Mostly manual","Unknown"],
+  "disqualified": true or false,
+  "disqualify_reason": "reason if disqualified, else null",
+  "score": integer 0-100,
+  "tier": one of ["Hot","Warm","Cold","Disqualified"],
+  "score_rationale": "2-3 sentences explaining the score and why they are or aren't a fit",
+  "target_titles": ["4-6 specific job titles to target at this company, Operations/VP/Director level first — be specific to their org structure"],
+  "key_talking_point": "one sharp, specific talking point personalized to this exact company — reference something real about them"
+}
+
+Scoring: Industry: Medicare Advantage=25, Health/Life=20, P&C=15, Wealth/Home Services=12, Other Insurance=14, Outside=disqualify. Size: Under 15=disqualify, 15-25=8, 25-50=18, 50-200=22, 200+=25, Carrier=25. Tech pain signals strength: 0-20pts. Vendor fragmentation: 0-15pts. Max 100.
+Disqualify ONLY if: confirmed under 15 agents OR completely outside insurance/financial services.
+Return ONLY valid JSON. No markdown fences, no explanation, no preamble.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 1200,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    let txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    txt = txt.replace(/```json|```/g,'').trim();
+    const i=txt.indexOf('{'), l=txt.lastIndexOf('}');
+    if(i!==-1&&l!==-1) txt=txt.slice(i,l+1);
+    currentData = JSON.parse(txt);
+    renderResult(currentData);
+  } catch(e) {
+    main.innerHTML = `<div class="disq-banner"><div class="disq-x">⚠</div><div><strong>Error</strong><p>${esc(e.message||'Something went wrong. Please try again.')}</p></div></div>`;
+  }
+  btn.disabled=false; btn.textContent='Qualify →';
+}
+
+function renderResult(d) {
+  const main = document.getElementById('main-state');
+  const isDisq = d.disqualified || d.tier==='Disqualified';
+  const scoreColor = isDisq ? '#ff5c5c' : d.tier==='Hot' ? '#00e89a' : d.tier==='Warm' ? '#f5a623' : '#55555f';
+  const tierClass = isDisq ? 'tier-disq' : d.tier==='Hot' ? 'tier-hot' : d.tier==='Warm' ? 'tier-warm' : 'tier-cold';
+
+  const signals = (d.tech_pain_signals||[]).map(s=>
+    `<div class="signal"><div class="signal-dot"></div><span>${esc(s)}</span></div>`).join('');
+  const titles = (d.target_titles||[]).map((t,i)=>
+    `<span class="title-tag ${i<2?'primary':''}">${esc(t)}</span>`).join('');
+  const disqBanner = isDisq ? `<div class="disq-banner"><div class="disq-x">✕</div><div><strong>Disqualified</strong><p>${d.disqualify_reason?esc(d.disqualify_reason):'Does not meet minimum qualifying criteria.'}</p></div></div>` : '';
+
+  main.innerHTML = `
+  <div>
+    ${disqBanner}
+    <div class="result-grid">
+      <div>
+        <div class="score-card">
+          <div class="score-top">
+            <div class="score-left">
+              <h2>${esc(d.company||'')}</h2>
+              <p>${esc(d.description||'')}</p>
+            </div>
+            <div style="text-align:right">
+              <div class="score-big" style="color:${scoreColor}">${d.score}<span class="score-denom">/100</span></div>
+              <div style="margin-top:8px"><span class="tier-pill ${tierClass}">${d.tier}</span></div>
+            </div>
+          </div>
+          <div class="score-bar-track"><div class="score-bar-fill" style="width:${d.score}%;background:${scoreColor}"></div></div>
+          <p class="rationale">${esc(d.score_rationale||'')}</p>
+          ${d.key_talking_point?`<div class="talking-point"><div class="tp-label">Key talking point</div><p>${esc(d.key_talking_point)}</p></div>`:''}
+          <div class="info-grid">
+            <div class="info-cell"><div class="info-cell-label">Industry</div><div class="info-cell-val">${esc(d.industry||'—')}</div></div>
+            <div class="info-cell"><div class="info-cell-label">Est. agent count</div><div class="info-cell-val">${esc(d.agent_count||'—')}</div></div>
+            <div class="info-cell"><div class="info-cell-label">Revenue range</div><div class="info-cell-val">${esc(d.revenue_range||'—')}</div></div>
+            <div class="info-cell"><div class="info-cell-label">Vendor situation</div><div class="info-cell-val">${esc(d.vendor_situation||'—')}</div></div>
+          </div>
+          ${signals?`<div class="section-head">Tech pain signals</div><div class="signal-list">${signals}</div>`:''}
+          ${titles?`<div class="section-head">Who to target</div><div class="titles-wrap">${titles}</div><div class="titles-note">Green = primary targets</div>`:''}
+        </div>
+        <button class="new-search-btn" onclick="newSearch()">← Qualify another company</button>
+      </div>
+
+      ${!isDisq?`
+      <div class="right-panel">
+        <div class="panel-card">
+          <h3>Outreach Email</h3>
+          <p>AI-drafted cold email personalized to ${esc(d.company||'this prospect')}.</p>
+          <button class="gen-btn green" onclick="generateEmail()">Draft email →</button>
+          <div class="output-wrap" id="email-output"></div>
+        </div>
+        <div class="panel-card">
+          <h3>Call Script</h3>
+          <p>Full talk track with discovery questions, objection handling, and close.</p>
+          <button class="gen-btn outline" onclick="generateCallScript()">Build script →</button>
+          <div class="output-wrap" id="call-output"></div>
+        </div>
+      </div>`:''}
+    </div>
+  </div>`;
+}
+
+async function generateEmail() {
+  const d = currentData; if(!d) return;
+  const out = document.getElementById('email-output');
+  out.innerHTML = '<div class="output-loading"><div class="spin"></div>Drafting email...</div>';
+  const prompt = `You are a senior SDR at EnrollHere, a platform that consolidates insurance agency/carrier tech stacks (leads, commissions, CCaaS, reporting, analytics). Key client: AmeriLife. Avg deal: $50K.
+
+Write a cold outreach email for ${d.company}.
+About them: ${d.description||''}
+Industry: ${d.industry} | Size: ${d.agent_count}
+Pain signals: ${(d.tech_pain_signals||[]).join(', ')}
+Primary contacts: ${(d.target_titles||[]).slice(0,2).join(', ')}
+Key talking point: ${d.key_talking_point||''}
+
+Requirements:
+- Subject line that earns the open (specific, not generic)
+- Opening hook tied to something real about them
+- Connect their pain to EnrollHere consolidating their stack
+- Name-drop AmeriLife as a reference if relevant
+- Low-friction CTA: 15-min call
+- 150-180 words max, human and direct
+
+Format exactly as:
+Subject: [subject line]
+
+[email body]`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]}) });
+    const data = await res.json();
+    const text = data.content?.find(b=>b.type==='text')?.text||'Could not generate.';
+    out.innerHTML = `<div class="output-box"><div class="output-top"><span class="output-label">Email draft</span><button class="copy-btn" onclick="copyEl('em',this)">Copy</button></div><div class="output-text" id="em">${esc(text)}</div></div>`;
+  } catch(e) { out.innerHTML='<div class="output-loading">Error — try again.</div>'; }
+}
+
+async function generateCallScript() {
+  const d = currentData; if(!d) return;
+  const out = document.getElementById('call-output');
+  out.innerHTML = '<div class="output-loading"><div class="spin"></div>Building script...</div>';
+  const prompt = `You are a sales coach at EnrollHere, a platform consolidating tech stacks for insurance agencies and carriers.
+
+Build a cold call script for ${d.company} (${d.agent_count}, ${d.industry}).
+Pain signals: ${(d.tech_pain_signals||[]).join(', ')}
+Target titles: ${(d.target_titles||[]).slice(0,2).join(', ')}
+Key talking point: ${d.key_talking_point||''}
+
+Include:
+1. Opening — 15-second pattern interrupt, no pitch
+2. Permission bridge
+3. 3-4 sharp discovery questions about their current stack and pain
+4. Value bridge connecting their pain to EnrollHere
+5. Two likely objections with sharp responses
+6. Close / next step ask
+
+Conversational and natural. Use clear section headers.`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]}) });
+    const data = await res.json();
+    const text = data.content?.find(b=>b.type==='text')?.text||'Could not generate.';
+    out.innerHTML = `<div class="output-box"><div class="output-top"><span class="output-label">Call script</span><button class="copy-btn" onclick="copyEl('cs',this)">Copy</button></div><div class="output-text" id="cs">${esc(text)}</div></div>`;
+  } catch(e) { out.innerHTML='<div class="output-loading">Error — try again.</div>'; }
+}
+
+function copyEl(id, btn) {
+  const el = document.getElementById(id); if(!el) return;
+  navigator.clipboard.writeText(el.textContent).then(()=>{ btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy',1500); });
+}
+
+function newSearch() {
+  document.getElementById('company-input').value='';
+  document.getElementById('main-state').innerHTML=`<div class="idle-state"><div class="idle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg></div><h3>Ready to qualify</h3><p>Type any insurance agency or carrier. The AI will research the company, score their fit for EnrollHere, and prep your outreach.</p><div class="examples"><div class="example-pill" onclick="fillAndRun('Integrity Marketing Group')">Integrity Marketing Group</div><div class="example-pill" onclick="fillAndRun('AssuredPartners')">AssuredPartners</div><div class="example-pill" onclick="fillAndRun('HCSC')">HCSC</div><div class="example-pill" onclick="fillAndRun('NFP Corp')">NFP Corp</div></div></div>`;
+  document.getElementById('company-input').focus();
+  currentData=null;
+}
+
+function esc(t){if(!t)return '';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+</script>
+</body>
+</html>
