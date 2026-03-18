@@ -364,7 +364,7 @@ Return ONLY valid JSON. No markdown fences, no explanation, no preamble.`;
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514', max_tokens: 1200,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
@@ -473,7 +473,7 @@ Subject: [subject line]
 
 [email body]`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]}) });
+    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]}) });
     const data = await res.json();
     const text = data.content?.find(b=>b.type==='text')?.text||'Could not generate.';
     out.innerHTML = `<div class="output-box"><div class="output-top"><span class="output-label">Email draft</span><button class="copy-btn" onclick="copyEl('em',this)">Copy</button></div><div class="output-text" id="em">${esc(text)}</div></div>`;
@@ -501,7 +501,7 @@ Include:
 
 Conversational and natural. Use clear section headers.`;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]}) });
+    const res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}, body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]}) });
     const data = await res.json();
     const text = data.content?.find(b=>b.type==='text')?.text||'Could not generate.';
     out.innerHTML = `<div class="output-box"><div class="output-top"><span class="output-label">Call script</span><button class="copy-btn" onclick="copyEl('cs',this)">Copy</button></div><div class="output-text" id="cs">${esc(text)}</div></div>`;
@@ -521,6 +521,7 @@ function newSearch() {
 }
 
 function esc(t){if(!t)return '';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const ANTHROPIC_API_KEY = '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';
 </script>
 </body>
 </html>
